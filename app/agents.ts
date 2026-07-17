@@ -10,6 +10,7 @@ export type AgentProfile = {
   categoryLabel: string;
   role: string;
   oneLiner: string;
+  intro: string;
   bestFor: string;
   environment: string;
   tools: string;
@@ -37,6 +38,7 @@ export const agents: AgentProfile[] = [
     categoryLabel: "编程 Agent",
     role: "终端软件工程 Agent",
     oneLiner: "在你的终端里理解代码库、修改文件并运行开发命令。",
+    intro: "Claude Code 是 Anthropic 面向软件开发的终端 Agent。它直接在项目目录中读取代码、规划修改并调用命令，适合习惯 CLI、希望把复杂工程任务交给 AI 协作完成的开发者。",
     bestFor: "复杂代码理解、重构、调试，以及偏终端的开发工作流。",
     environment: "本机终端；可连接 IDE、脚本和 CI 工作流。",
     tools: "文件读写、Shell、代码搜索、Git、Web/MCP 扩展。",
@@ -60,6 +62,7 @@ export const agents: AgentProfile[] = [
     categoryLabel: "编程 Agent",
     role: "多端软件工程 Agent",
     oneLiner: "围绕代码仓库完成理解、修改、测试、审查和交付。",
+    intro: "Codex 是 OpenAI 的软件工程 Agent，可在桌面、CLI、IDE、Web 和云端任务中工作。它强调代码修改、测试、Git 审查和并行任务的完整闭环，同时通过沙箱与审批控制执行边界。",
     bestFor: "需要本地开发、Git 审查、并行工作树或云端任务协作的团队。",
     environment: "桌面应用、CLI、IDE、Web 与 OpenAI 管理的云端环境。",
     tools: "文件、Shell、Git、Web、MCP、技能、连接器和自动化。",
@@ -70,8 +73,8 @@ export const agents: AgentProfile[] = [
     strengths: ["开发闭环完整", "Git、审查和工作树原生", "沙箱与审批边界细"],
     limits: ["核心仍是软件开发", "平台和模型选择相对集中", "云端与本地能力存在差异"],
     goals: ["code", "launch"],
-    officialUrl: "https://learn.chatgpt.com/docs/glossary",
-    sourceLabel: "Codex 官方术语与产品文档",
+    officialUrl: "https://github.com/openai/codex",
+    sourceLabel: "OpenAI Codex 官方仓库与文档",
   },
   {
     id: "cursor",
@@ -83,6 +86,7 @@ export const agents: AgentProfile[] = [
     categoryLabel: "编程 Agent",
     role: "AI 代码编辑器与后台 Agent",
     oneLiner: "把代码问答、编辑、终端和后台 Agent 放进同一个编辑器。",
+    intro: "Cursor 是围绕 AI 协作重新设计的代码编辑器。开发者可以在 IDE 内让 Agent 搜索代码库、编辑文件、运行终端并审阅 Diff，也能把仓库任务交给后台 Agent 异步执行。",
     bestFor: "希望在熟悉的编辑器界面中高频协作、审阅 Diff 和启动后台任务的人。",
     environment: "本地 Cursor IDE、CLI，以及连接 GitHub 的 Web/移动后台 Agent。",
     tools: "代码库搜索、文件编辑、终端、Diff、GitHub 后台任务。",
@@ -106,6 +110,7 @@ export const agents: AgentProfile[] = [
     categoryLabel: "通用执行 Agent",
     role: "云端通用执行与桌面 Agent",
     oneLiner: "在独立云端电脑中规划并交付网站、报告、幻灯片等完整成果。",
+    intro: "Manus 是偏通用交付的执行型 Agent，主要在托管云端电脑里完成研究、内容、网站和办公成果。它更像可以被委派完整任务的数字工作者，但广泛工具权限和任务 credits 需要用户持续关注。",
     bestFor: "不想管理开发环境、希望直接委派研究和内容交付的用户。",
     environment: "云端沙箱、浏览器，以及授权后可操作本机文件和命令的桌面端。",
     tools: "浏览器、文件、终端、软件安装、连接器与本机命令行。",
@@ -129,6 +134,7 @@ export const agents: AgentProfile[] = [
     categoryLabel: "职场与开发平台",
     role: "职场 Agent 与 Agent 开发平台",
     oneLiner: "既提供开箱即用的办公创作 Agent，也提供智能体、工作流和应用开发能力。",
+    intro: "扣子 Coze 同时覆盖职场内容生产与智能体开发。普通用户可以生成文档、PPT、表格和多媒体内容，开发者则可组合技能、工作流与应用发布能力，适合中文内容和低代码自动化场景。",
     bestFor: "内容运营、办公产物、低代码工作流，以及快速发布 AI 应用。",
     environment: "托管 Web/移动产品、云端运行环境；另有开源开发与调试工具。",
     tools: "文档、PPT、表格、图片/音视频、技能、工作流、云电脑与云手机。",
@@ -152,6 +158,7 @@ export const agents: AgentProfile[] = [
     categoryLabel: "桌面办公 Agent",
     role: "全场景职场 AI 智能体",
     oneLiner: "面向 HR、运营、销售等岗位，跨文件和工具协同完成办公任务。",
+    intro: "WorkBuddy 是腾讯面向职场岗位的桌面办公 Agent。它围绕本地文件、常用办公工具与腾讯生态执行跨应用任务，重点服务 HR、运营、销售等重复且流程化的工作。",
     bestFor: "腾讯生态用户、团队办公、经营分析和重复跨工具流程。",
     environment: "Windows/macOS 桌面工作台，并与腾讯云及 QQ/企微生态衔接。",
     tools: "本地电脑操作、文档与表格、浏览器、多模型、团队和企业知识。",
@@ -175,6 +182,7 @@ export const agents: AgentProfile[] = [
     categoryLabel: "编程 Agent",
     role: "Agentic Coding 平台",
     oneLiner: "用 Editor 做实时协作，用 Quest 把长期、多步骤开发任务交给 Agent。",
+    intro: "Qoder 是一款 Agentic Coding 平台，把编辑器内的实时协作与 Quest 长任务模式结合起来。它适合需要理解大型代码库、沉淀项目知识并把多步骤开发任务长期委派给 Agent 的团队。",
     bestFor: "希望在编辑器内编码，同时把较长任务委派给独立工作区的开发者。",
     environment: "Qoder Editor、Quest 独立窗口、CLI 与 JetBrains 插件。",
     tools: "代码编辑、Shell、项目搜索、MCP、知识引擎和任务看板。",
@@ -198,6 +206,7 @@ export const agents: AgentProfile[] = [
     categoryLabel: "本地办公 Agent",
     role: "本地跨应用办公 Agent",
     oneLiner: "围绕本地文件、数据分析和重复操作，把自然语言变成可执行流程。",
+    intro: "DuMate 是百度推出的本地办公 Agent，强调文件处理、数据分析、跨应用操作和可复用技能。它更适合希望用自然语言驱动电脑完成批量、重复或定时办公流程的中文用户。",
     bestFor: "文件整理、批量格式转换、表格分析和桌面自动化。",
     environment: "Windows/macOS 桌面客户端，并提供移动 App。",
     tools: "本地文件、Office/PDF、数据处理、跨应用操作、录制回放、Skills。",
@@ -221,6 +230,7 @@ export const agents: AgentProfile[] = [
     categoryLabel: "本地知识工作 Agent",
     role: "桌面本地知识工作 Agent",
     oneLiner: "挂载本地文件夹、操作浏览器、运行代码，并用 Agent Swarm 处理长任务。",
+    intro: "Kimi Work 面向研究与知识工作，可挂载本地资料、操作浏览器、运行代码并组织多个 Agent 协作。它适合需要结合本地文件与在线信息完成长时间调研、整理和自动化任务的人。",
     bestFor: "研究、金融数据、长文档、报告生成和需要定时执行的知识工作。",
     environment: "Windows 与 Apple silicon macOS 桌面端。",
     tools: "本地文件、WebBridge 浏览器、Python/Shell、定时任务和金融数据源。",
@@ -244,6 +254,7 @@ export const agents: AgentProfile[] = [
     categoryLabel: "编程 Agent",
     role: "AI IDE 与 SOLO Coding Agent",
     oneLiner: "在 IDE 中协作编码，或让 SOLO Agent 主导从目标到完整项目的开发。",
+    intro: "Trae 是面向软件开发的 AI IDE，既支持编辑器内协作，也提供更自主的 SOLO 开发方式。它适合希望由 Agent 从需求出发规划、编码并形成完整项目，同时仍保留 IDE 工作台的人。",
     bestFor: "Vibe Coding、0→1 原型，以及希望在 IDE 与高自主模式间切换的人。",
     environment: "TRAE IDE、插件，以及不同地区提供的 SOLO/Work 云端或桌面形态。",
     tools: "编辑器、终端、文档、网页、预览浏览器、MCP、自定义 Agent。",

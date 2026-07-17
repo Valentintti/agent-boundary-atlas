@@ -6,6 +6,7 @@ import {
   useRef,
   useState,
   type CSSProperties,
+  type FormEvent,
 } from "react";
 import {
   agents,
@@ -13,6 +14,10 @@ import {
   VERIFIED_AT,
   type AgentProfile,
 } from "./agents";
+import {
+  runRecommendation,
+  type RecommendationResult,
+} from "./recommendation";
 
 type Goal = "all" | "code" | "office" | "launch";
 type CategoryFilter = "all" | "coding" | "work";
@@ -32,6 +37,12 @@ const boundaryLegend = [
   ["05", "持续", "能否记忆、后台和定时"],
 ];
 
+const recommendationExamples = [
+  "我要开发一个网站，希望在 IDE 里边做边审查",
+  "我每周要整理本地 Excel 和报告，最好能定时执行",
+  "我要查资料并自动生成一份带来源的竞品报告",
+];
+
 export default function Home() {
   const [activeGoal, setActiveGoal] = useState<Goal>("all");
   const [category, setCategory] = useState<CategoryFilter>("all");
@@ -39,6 +50,8 @@ export default function Home() {
   const [selected, setSelected] = useState<string[]>([]);
   const [notice, setNotice] = useState("");
   const [shareState, setShareState] = useState("复制对比链接");
+  const [taskQuestion, setTaskQuestion] = useState("");
+  const [recommendation, setRecommendation] = useState<RecommendationResult | null>(null);
   const [ready, setReady] = useState(false);
   const compareRef = useRef<HTMLElement>(null);
 
@@ -110,6 +123,16 @@ export default function Home() {
     }
   }
 
+  function recommendFor(text: string) {
+    setTaskQuestion(text);
+    setRecommendation(runRecommendation(text));
+  }
+
+  function submitRecommendation(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setRecommendation(runRecommendation(taskQuestion));
+  }
+
   return (
     <main>
       <header className="site-header">
@@ -121,6 +144,7 @@ export default function Home() {
           </span>
         </a>
         <nav aria-label="主导航">
+          <a href="#recommend">推荐</a>
           <a href="#atlas">图谱</a>
           <a href="#compare">对比</a>
           <a href="#method">方法</a>
@@ -139,8 +163,8 @@ export default function Home() {
             不比谁最火。把任务、环境、工具、权限和持续性放到同一张桌上，
             看清它到底适不适合你。
           </p>
-          <a className="primary-link" href="#atlas">
-            开始选择 <span aria-hidden="true">↓</span>
+          <a className="primary-link" href="#recommend">
+            描述你的任务 <span aria-hidden="true">↓</span>
           </a>
         </div>
         <div className="hero-number" aria-label="首批收录十个 Agent">
@@ -164,6 +188,81 @@ export default function Home() {
               <p>{text}</p>
             </article>
           ))}
+        </div>
+      </section>
+
+      <section className="recommender" id="recommend" aria-labelledby="recommend-title">
+        <div className="recommender-copy">
+          <p className="eyebrow">TASK → BOUNDARY → MATCH</p>
+          <h2 id="recommend-title">说说你要做什么，先找一个合适起点。</h2>
+          <p>
+            推荐不会让模型直接选“赢家”。系统只识别任务、环境、自主程度和权限偏好，
+            再用固定规则匹配这 10 个 Agent。
+          </p>
+          <div className="example-prompts" aria-label="示例问题">
+            {recommendationExamples.map((example) => (
+              <button key={example} type="button" onClick={() => recommendFor(example)}>
+                {example}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div className="recommender-panel">
+          <form onSubmit={submitRecommendation}>
+            <label htmlFor="task-question">你想交付什么结果？</label>
+            <textarea
+              id="task-question"
+              value={taskQuestion}
+              maxLength={500}
+              onChange={(event) => setTaskQuestion(event.target.value)}
+              placeholder="例如：我要做一个网站，希望 AI 能在 IDE 里写代码，但每一步都让我审查……"
+            />
+            <div className="question-actions">
+              <small>{taskQuestion.length} / 500 · 不保存你的提问</small>
+              <button type="submit">推荐 Agent →</button>
+            </div>
+          </form>
+
+          {recommendation && (
+            <div className={`recommendation-output ${recommendation.state}`} aria-live="polite">
+              {recommendation.state === "recommended" ? (
+                <>
+                  <div className="recommendation-summary">
+                    <span>已完成边界匹配</span>
+                    <p>{recommendation.message}</p>
+                  </div>
+                  <div className="recommendation-list">
+                    {recommendation.recommendations.map((item, index) => {
+                      const agent = agents.find((candidate) => candidate.id === item.agentId);
+                      if (!agent) return null;
+                      return (
+                        <article key={item.agentId} className={index === 0 ? "primary-match" : ""}>
+                          <div className="match-rank">{index === 0 ? "首选" : `备选 ${index}`}</div>
+                          <div className="match-title">
+                            <span style={{ background: agent.color }}>{agent.mark}</span>
+                            <div><strong>{agent.name}</strong><small>{agent.role}</small></div>
+                          </div>
+                          <p className="match-reasons">
+                            {item.reasons.length ? `匹配：${item.reasons.join("、")}` : "与核心任务类型匹配"}
+                          </p>
+                          <p className="match-boundary">边界提醒：{item.boundary}</p>
+                          <button type="button" onClick={() => toggleAgent(agent.id)}>
+                            {selected.includes(agent.id) ? "已加入对比 ✓" : "+ 加入对比"}
+                          </button>
+                        </article>
+                      );
+                    })}
+                  </div>
+                </>
+              ) : (
+                <div className="clarification">
+                  <strong>{recommendation.state === "rejected" ? "这段描述暂时无法处理" : "还需要一点信息"}</strong>
+                  <p>{recommendation.message}</p>
+                </div>
+              )}
+            </div>
+          )}
         </div>
       </section>
 
@@ -245,6 +344,7 @@ export default function Home() {
                 </div>
                 <p className="agent-role">{agent.role}</p>
                 <p className="agent-summary">{agent.oneLiner}</p>
+                <p className="agent-intro">{agent.intro}</p>
 
                 <dl className="card-boundaries">
                   <div>
@@ -395,7 +495,7 @@ export default function Home() {
           <span><strong>Boundary Atlas</strong><small>Agent 边界图谱</small></span>
         </div>
         <p>适合不代表最好，能力更大也意味着权限与风险面更大。</p>
-        <span>V1 · 10 Agents</span>
+        <span>V2 · 10 Agents · 每周复核</span>
       </footer>
 
       {selectedAgents.length > 0 && (

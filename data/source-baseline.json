@@ -1,0 +1,85 @@
+{
+  "verifiedAt": "2026-07-17",
+  "sources": [
+    {
+      "id": "claude-code",
+      "name": "Claude Code",
+      "url": "https://docs.anthropic.com/en/docs/claude-code/cli-usage",
+      "hash": "322cf8ac5ccc7235357fe5d471c2553df8fe801c231dad27c76404c8fceac3c6",
+      "etag": null,
+      "lastModified": null
+    },
+    {
+      "id": "codex",
+      "name": "Codex",
+      "url": "https://raw.githubusercontent.com/openai/codex/main/README.md",
+      "hash": "b4ebc55595fdd9ff454e40add30e676df2001bf6f3ccca8676b720b80d7007a5",
+      "etag": "W/\"31b73adf8ee3e46870e0077ab5c926bca70ce78ee9fb384460c068c032254ae8\"",
+      "lastModified": null
+    },
+    {
+      "id": "cursor",
+      "name": "Cursor",
+      "url": "https://docs.cursor.com/chat/overview",
+      "hash": "50e5901cd8d4768829d025205cf9c00baf9e461c233466430de7c69c11fe4cdb",
+      "etag": "W/\"98e9fe9691f232a93465f4702ee76df3\"",
+      "lastModified": null
+    },
+    {
+      "id": "manus",
+      "name": "Manus",
+      "url": "https://manus.im/docs/introduction/welcome",
+      "hash": "a4b88ca8fe85fe021bd0aa6db6fbeacc978fa085c078a0dd641c26bfd4ba86e3",
+      "etag": null,
+      "lastModified": null
+    },
+    {
+      "id": "coze",
+      "name": "扣子 Coze",
+      "url": "https://www.coze.cn/overview",
+      "hash": "512cde054576a9b0216223bdd155d4a10966bbbb2d836bd97de59a56d1e3496f",
+      "etag": null,
+      "lastModified": null
+    },
+    {
+      "id": "workbuddy",
+      "name": "WorkBuddy",
+      "url": "https://www.codebuddy.cn/docs/workbuddy/From-Beginner-to-Expert-Guide/Product-Guide",
+      "hash": "b7df9767258fdb417fde651e71cbf59108de898fb679e488126ceb814f28fe48",
+      "etag": "W/\"6a59f364-9f6c\"",
+      "lastModified": "Fri, 17 Jul 2026 09:18:28 GMT"
+    },
+    {
+      "id": "qoder",
+      "name": "Qoder",
+      "url": "https://docs.qoder.com/",
+      "hash": "9b1acbdcb90fd26ff88ea620c178c5cf120bbc83af13c039bc7668f83c03b14b",
+      "etag": null,
+      "lastModified": "Fri, 17 Jul 2026 03:50:03 GMT"
+    },
+    {
+      "id": "dumate",
+      "name": "DuMate",
+      "url": "https://www.dumate.cn/",
+      "hash": "a574a68e981d60a7b9f10d6dfd0fb1bec45aa2aa03699b4bb9681a38a7818b64",
+      "etag": "W/\"72a0a4916fdcaa1c579ecde82b4cea78\"",
+      "lastModified": "Sat, 11 Jul 2026 12:04:35 GMT"
+    },
+    {
+      "id": "kimi-work",
+      "name": "Kimi Work",
+      "url": "https://www.kimi.com/products/kimi-work",
+      "hash": "15879637cc85a0cfea06efe86601be980398d87938b232358061422ecd90649b",
+      "etag": null,
+      "lastModified": null
+    },
+    {
+      "id": "trae",
+      "name": "Trae",
+      "url": "https://www.trae.ai/",
+      "hash": "22191c50cce688e5572758a85bbc0a8c7ef549357f7c713fdc10ec84d6825d18",
+      "etag": null,
+      "lastModified": null
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+name: Weekly Agent Source Review
+
+on:
+  schedule:
+    - cron: "15 1 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Check official sources
+        run: node scripts/check-sources.mjs --output source-review.md
+      - name: Create or update review issue
+        if: ${{ hashFiles('source-review.md') != '' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if [ ! -s source-review.md ]; then exit 0; fi
+          gh label create source-review --color 6f42c1 --description "Weekly official-source review" --force
+          issue_number=$(gh issue list --label source-review --state open --json number --jq '.[0].number // empty')
+          if [ -n "$issue_number" ]; then
+            gh issue comment "$issue_number" --body-file source-review.md
+          else
+            gh issue create --title "Agent 官方来源待复核" --label source-review --body-file source-review.md
+          fi
